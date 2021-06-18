@@ -1,9 +1,10 @@
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { format, parseISO } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import { convertDurationToTimeString } from '@/utils/convertDurationToTimeString';
 import { api } from '@/services/api';
 
+import Link from 'next/link';
 import Image from 'next/image';
 
 import styles from '@/styles/pages/Home.module.scss';
@@ -47,7 +48,9 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
               />
 
               <div className={styles.episodeDetails}>
-                <a href="@">{episode.title}</a>
+                <Link href={`/episodes/${episode.id}`}>
+                  <a>{episode.title}</a>
+                </Link>
                 <p>{episode.members}</p>
                 <span>{episode.publishedAt}</span>
                 <span>{episode.durationAsString}</span>
@@ -85,7 +88,9 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
                   />
                 </td>
                 <td>
-                  <a href="@">{episode.title}</a>
+                  <Link href={`/episodes/${episode.id}`}>
+                    <a>{episode.title}</a>
+                  </Link>
                 </td>
                 <td>{episode.members}</td>
                 <td style={{ width: 100 }}>{episode.publishedAt}</td>
@@ -104,7 +109,7 @@ export default function Home({ allEpisodes, latestEpisodes }: HomeProps) {
   );
 }
 
-export const getStaticProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get(`/episodes`, {
     params: {
       _limit: 12,
