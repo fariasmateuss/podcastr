@@ -27,7 +27,9 @@
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
     "import/no-duplicates": "off",
+    "no-useless-return": "off",
     "jsx-a11y/control-has-associated-label": "off",
+    "jsx-a11y/media-has-caption": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
