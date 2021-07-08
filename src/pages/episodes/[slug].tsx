@@ -9,6 +9,7 @@ import { convertDurationToTimeString } from '@/utils/convertDurationToTimeString
 import { api } from '@/services/api';
 
 import styles from '@/styles/pages/Episodes.module.scss';
+import { usePlayer } from '@/context/PlayerContext';
 
 interface slugParams extends ParsedUrlQuery {
   slug: string;
@@ -29,6 +30,8 @@ interface Episode {
   publishedAt: Date;
   durationAsString: string;
   description: string;
+  duration: number;
+  url: string;
 }
 
 interface EpisodeProps {
@@ -36,12 +39,14 @@ interface EpisodeProps {
 }
 
 export default function Episode({ episode }: EpisodeProps) {
+  const { play } = usePlayer();
+
   return (
     <div className={styles.episode}>
       <div className={styles.thumbnailContainer}>
         <Link href="/">
           <button type="button">
-            <img src="/arrow-left.svg" alt="Voltar" />
+            <img src="/arrow-left.svg" alt="Retornar" />
           </button>
         </Link>
         <Image
@@ -50,8 +55,8 @@ export default function Episode({ episode }: EpisodeProps) {
           src={episode.thumbnail}
           objectFit="cover"
         />
-        <button type="button">
-          <img src="/play.svg" alt="Tocar episódio" />
+        <button type="button" onClick={() => play(episode)}>
+          <img src="/play.svg" alt="Reproduzir" />
         </button>
       </div>
 
